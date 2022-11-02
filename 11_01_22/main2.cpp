@@ -47,7 +47,7 @@ int movieCallback(void* data, int numCols, char** values, char** columnNames)
     {
         cout << columnNames[i] << ": ";
         if(values[i] != NULL)
-            cout << values[i];
+            cout << values[i]; 
 
         cout << endl;
     }
