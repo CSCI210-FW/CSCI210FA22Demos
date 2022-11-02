@@ -4,6 +4,11 @@
             "cwd": "c:\\Users\\FORTI\\OneDrive\\Documents\\GitHub\\CSCI210FA22Demos\\11_01_22",
             "binaryPath": "c:\\Users\\FORTI\\OneDrive\\Documents\\GitHub\\CSCI210FA22Demos\\11_01_22\\a.out",
             "binaryArgs": []
+        },
+        {
+            "cwd": "c:\\Users\\FORTI\\OneDrive\\Documents\\GitHub\\CSCI210FA22Demos\\11_01_22",
+            "binaryPath": "c:\\Users\\FORTI\\OneDrive\\Documents\\GitHub\\CSCI210FA22Demos\\11_01_22\\main2",
+            "binaryArgs": []
         }
     ]
 }
