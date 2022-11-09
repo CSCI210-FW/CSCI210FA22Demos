@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/mnt/c/Users/FORTI/OneDrive/Documents/GitHub/CSCI210FA22Demos/11_08_22",
+            "binaryPath": "/mnt/c/Users/FORTI/OneDrive/Documents/GitHub/CSCI210FA22Demos/11_08_22/a.out",
+            "binaryArgs": []
+        }
+    ]
+}
