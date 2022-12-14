@@ -5,6 +5,8 @@
 #include <iomanip>
 #include <climits>
 #include <ctime>
+#include <cctype>
+#include <regex>
 #include "sqlite3.h"
 
 using namespace std;
@@ -16,6 +18,7 @@ void addInvoice(sqlite3 *);
 int rollback(sqlite3 *, string);
 int commit(sqlite3 *);
 int beginTransaction(sqlite3 *);
+void addCustomer(sqlite3*);
 int mainMenu();
 
 int main()
@@ -49,6 +52,9 @@ int main()
         case 3:
             addInvoice(mydb);
             break;
+        case 4:
+            addCustomer(mydb);
+            break;
         case -1:
         {
             // don't forget to close.
@@ -69,6 +75,7 @@ void printMainMenu()
     cout << "1. View an invoice" << endl;
     cout << "2. View Customer Information" << endl;
     cout << "3. Add an invoice" << endl;
+    cout << "4. Add a Customer" << endl;
     cout << "Enter Choice: ";
 }
 
@@ -78,7 +85,7 @@ int mainMenu()
 
     printMainMenu();
     cin >> choice;
-    while ((!cin || choice < 1 || choice > 3) && choice != -1)
+    while ((!cin || choice < 1 || choice > 4) && choice != -1)
     {
         if (!cin)
         {
@@ -507,4 +514,84 @@ int beginTransaction(sqlite3 *db)
         sqlite3_free(err);
     }
     return rc;
+}
+
+void addCustomer(sqlite3* db)
+{
+    string fname, lname, phone, areacode;
+    char initial, yn;
+    bool i = false, a = false;
+    cout << "Enter the customer first name: ";
+    getline(cin>>ws,fname);
+    cout << "Do you want to enter a middile initial? (Y or N)";
+    cin >>yn;
+    yn = toupper(yn);
+    if(yn == 'Y')
+    {
+        cout << "Enter the middle initial: ";
+        cin >> initial;
+        i = true;
+    }
+    cout << "Enter the customer last name: ";
+    getline(cin>>ws, lname);
+    cout << "Do you want to enter an area code? (Y or N)";
+    cin >> yn;
+    yn = toupper(yn);
+    if(yn == 'Y')
+    {
+        cout << "Enter the 3 digit area code: ";
+        getline(cin >> ws, areacode);
+        regex r{"\\d{3}"};
+        while(!regex_match(areacode,r))
+        {
+            cout << "Area codes are 3 digit numbers, please try again." << endl;
+            cout << "Enter the 3 digit area code: ";
+            getline(cin >> ws, areacode);
+        }
+        a = true;
+
+    }
+    cout << "Enter the 8 digits of the phone number (in the format xxx-xxxx): ";
+    getline(cin >> ws , phone);
+    regex r{"\\d{3}-\\d{4}"};
+    while(!regex_match(phone, r))
+    {
+        cout << "The phone number is not in the correct format." << endl;
+        cout << "Enter the 8 digits of the phone number (in the format xxx-xxxx): ";
+        getline(cin >> ws , phone);
+    }
+    string query = "insert into customer (cus_lname, cus_fname, cus_phone";
+    if(i)
+    {
+        query += ", cus_initial";
+    }
+    if(a)
+    {
+        query += ", cus_areacode";
+    }
+    query +=") values ('";
+    query += lname + "', '";
+    query += fname + "', '";
+    query += phone + "'";
+    if(i)
+    {
+        query += ", '" + to_string(initial) + "'";
+    }
+    if(a)
+    {
+        query += ", '" + areacode + "'";
+    }
+    query += ");";
+    cout << query << endl;
+    int rc = sqlite3_exec(db, query.c_str(), NULL, NULL, NULL);
+
+    if (rc != SQLITE_OK)
+    {
+        rollback(db, query);
+        return;
+    }
+    int cus_code = sqlite3_last_insert_rowid(db);
+    cout << "Successfully inserted customer " << cus_code << endl;
+
+
 }

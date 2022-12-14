@@ -4,6 +4,15 @@
             "cwd": "/mnt/c/Users/FORTI/OneDrive/Documents/GitHub/CSCI210FA22Demos/11_08_22",
             "binaryPath": "/mnt/c/Users/FORTI/OneDrive/Documents/GitHub/CSCI210FA22Demos/11_08_22/a.out",
             "binaryArgs": []
+        },
+        {
+            "cwd": "c:\\Users\\FORTI\\OneDrive\\Documents\\GitHub\\CSCI210FA22Demos\\11_08_22",
+            "binaryPath": "c:\\Users\\FORTI\\OneDrive\\Documents\\GitHub\\CSCI210FA22Demos\\11_08_22\\a.out",
+            "binaryArgs": []
         }
-    ]
+    ],
+    "files.associations": {
+        "iostream": "cpp",
+        "ostream": "cpp"
+    }
 }
